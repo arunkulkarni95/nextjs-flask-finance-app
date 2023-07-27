@@ -30,7 +30,7 @@ export default function Home() {
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-600">
-            Full Name
+            Your Full Name
           </label>
           <input
             type="text"
