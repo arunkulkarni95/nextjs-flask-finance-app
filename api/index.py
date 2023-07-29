@@ -1,14 +1,40 @@
 import requests, json, os
 from flask import Flask, jsonify, request
-from helpers.get_cik_number import get_cik_number
 from datetime import datetime
 from alpha_vantage.timeseries import TimeSeries
-from config.config import Config
+from dotenv import load_dotenv
+
+load_dotenv()
+
+class Config:
+    ALPHA_VANTAGE_API_KEY = os.environ.get('ALPHA_VANTAGE_API_KEY')
 
 DATA_SEC_BASE_URL = "https://data.sec.gov"
 USER_AGENT = "akulkar27@gmail.com"
 
 app = Flask(__name__)
+
+def load_ticker_mappings():
+    try:
+        url = "https://www.sec.gov/files/company_tickers.json"
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        raise Exception("Failed to load ticker mappings: " + str(e))
+
+def get_cik_number(ticker):
+    ticker = ticker.upper()
+    if ticker == 'TWTR':
+        cik_number = '0001418091'
+        return cik_number
+    else: 
+        mappings = load_ticker_mappings()
+        cik_number = None
+        for _, value in mappings.items():
+            if (value["ticker"] == ticker):
+                cik_number = str(value['cik_str']).zfill(10)
+                return cik_number
 
 def get_days_difference(date_str1, date_str2):
     # Step 1: Parse the date strings into datetime objects
@@ -51,7 +77,7 @@ def get_company_concepts():
     try:
         result = ''
         if ticker == "COST":
-            costco_facts = open(os.getcwd() + '\\api\\routes\\costco_company_facts.json')
+            costco_facts = open(os.getcwd() + '\\api\\costco_company_facts.json')
             result = json.load(costco_facts)
         else:
             headers = {'User-Agent': USER_AGENT}
