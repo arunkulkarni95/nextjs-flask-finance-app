@@ -1,85 +1,100 @@
-'use client';
+'use client'
+// pages/page.tsx
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react';
+import axios from 'axios';
 
-export default function Home() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Perform form submission or validation here
-    alert(JSON.stringify(formData));
-
-  };
-  
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    <div className="max-w-md mx-auto mt-10 p-4 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-gray-600">
-            Your Full Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-600">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="message" className="block text-gray-600">
-            Message
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            rows={4}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-            required
-          />
-        </div>
-        <div className="text-center">
-          <button
-            type="submit"
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
-    </main>
-  )
+interface CompanyData {
+  [key: string]: string;
 }
+
+const StockTicker: React.FC = () => {
+  const [ticker, setTicker] = useState('');
+  const [fiscalYear, setFiscalYear] = useState<number | ''>('');
+  const [jsonData, setJsonData] = useState<CompanyData | null>(null);
+  const [error, setError] = useState('');
+
+  const handleTickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTicker(e.target.value);
+    setError('');
+  };
+
+  const handleFiscalYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    setFiscalYear(isNaN(value) ? '' : value);
+    setError('');
+  };
+
+  const fetchData = async () => {
+    try {
+      if (!ticker || !fiscalYear || isNaN(fiscalYear)) {
+        setError('Please enter a valid stock ticker and fiscal year.');
+        return;
+      }
+
+      const response = await axios.post('/api/financials/company-concepts', {
+        ticker,
+        fiscal_year: fiscalYear,
+      });
+      setJsonData(response.data);
+      setError('');
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setError('Error fetching data. Please try again later.');
+    }
+  };
+
+  return (
+    <div className="container mx-auto p-4">
+      <div className="flex items-center mb-4">
+        <input
+          type="text"
+          className="border border-gray-300 p-2 mr-2"
+          placeholder="Enter stock ticker"
+          value={ticker}
+          onChange={handleTickerChange}
+        />
+        <input
+          type="number" // Change input type to number
+          className="border border-gray-300 p-2 mr-2"
+          placeholder="Enter fiscal year"
+          value={fiscalYear === '' ? '' : fiscalYear} // Ensure empty string is displayed for invalid input
+          onChange={handleFiscalYearChange}
+        />
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={fetchData}
+        >
+          Get Data
+        </button>
+      </div>
+
+      {error && (
+        <div className="text-red-600 mb-4">{error}</div>
+      )}
+
+      {jsonData && (
+        <table className="border-collapse border border-gray-400 w-full">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border border-gray-400 px-4 py-2">Key</th>
+              <th className="border border-gray-400 px-4 py-2">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(jsonData).map(([key, value]) => (
+              <tr key={key}>
+                <td className="border border-gray-400 px-4 py-2">{key}</td>
+                <td className="border border-gray-400 px-4 py-2">
+                  {String(value)} {/* Convert to string to handle any type */}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
+
+export default StockTicker;

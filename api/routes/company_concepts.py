@@ -22,7 +22,7 @@ def get_days_difference(date_str1, date_str2):
 @company_concepts_bp.route('/financials/company-concepts', methods=['POST'])
 def get_company_concepts():
     ticker = request.json['ticker'].upper()
-    fiscal_year = request.json['fiscal_year']
+    fiscal_year = int(request.json['fiscal_year'])
 
     cik_number = get_cik_number(ticker)
 
