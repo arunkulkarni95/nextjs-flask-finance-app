@@ -3,7 +3,7 @@ from flask import Blueprint, jsonify, request
 from helpers.get_cik_number import get_cik_number
 from datetime import datetime
 
-all_company_concepts_bp = Blueprint('all_company_concepts', __name__)
+company_concepts_bp = Blueprint('company_concepts', __name__)
 
 DATA_SEC_BASE_URL = "https://data.sec.gov"
 USER_AGENT = "akulkar27@gmail.com"
@@ -20,7 +20,7 @@ def get_days_difference(date_str1, date_str2):
     return time_difference.days
 
 @all_company_concepts_bp.route('/financials/all-company-concepts', methods=['POST'])
-def get_net_income():
+def get_company_concepts():
     ticker = request.json['ticker'].upper()
     fiscal_year = request.json['fiscal_year']
 
@@ -28,7 +28,6 @@ def get_net_income():
 
     url = f"{DATA_SEC_BASE_URL}/api/xbrl/companyfacts/CIK{cik_number}.json"
     print(url)
-    #f"https://data.sec.gov/api/xbrl/companyconcept/CIK{cik_number}/us-gaap/NetIncomeLoss.json"
 
     try:
         result = ''
@@ -44,7 +43,6 @@ def get_net_income():
         concepts_list = list(result['facts']['us-gaap'].keys())
         data_concepts = result['facts']['us-gaap']
 
-        # TODO put COST's company concepts in db since request is failing
         fdata = {}
         for item in concepts_list:
             data = data_concepts[item]['units']
