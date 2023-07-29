@@ -1,6 +1,6 @@
 from flask import Flask
-from routes.stock_price import stock_price_bp
-from routes.company_concepts import company_concepts_bp
+from stock_price import stock_price_bp
+from company_concepts import company_concepts_bp
 import logging
 import sys
 
