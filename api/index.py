@@ -1,62 +1,15 @@
-import requests, json, os
+import requests, json
 from os.path import join
 from flask import Flask, jsonify, request
-from datetime import datetime
-from alpha_vantage.timeseries import TimeSeries
-from dotenv import load_dotenv
-
-load_dotenv()
-
-class Config:
-    ALPHA_VANTAGE_API_KEY = os.environ.get('ALPHA_VANTAGE_API_KEY')
+from config.config import Config
+from util.alpha_vantage import get_alpha_vantage_stock_price
+from util.dates import get_days_difference
+from util.ticker_mappings import get_cik_number
 
 DATA_SEC_BASE_URL = "https://data.sec.gov"
-USER_AGENT = "akulkar27@gmail.com"
+USER_AGENT = Config.USER_AGENT
 
 app = Flask(__name__)
-
-def load_ticker_mappings():
-    try:
-        url = "https://www.sec.gov/files/company_tickers.json"
-        response = requests.get(url)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        raise Exception("Failed to load ticker mappings: " + str(e))
-
-def get_cik_number(ticker):
-    ticker = ticker.upper()
-    if ticker == 'TWTR':
-        cik_number = '0001418091'
-        return cik_number
-    else: 
-        mappings = load_ticker_mappings()
-        cik_number = None
-        for _, value in mappings.items():
-            if (value["ticker"] == ticker):
-                cik_number = str(value['cik_str']).zfill(10)
-                return cik_number
-
-def get_days_difference(date_str1, date_str2):
-    # Step 1: Parse the date strings into datetime objects
-    date1 = datetime.strptime(date_str1, '%Y-%m-%d')
-    date2 = datetime.strptime(date_str2, '%Y-%m-%d')
-
-    # Step 2: Calculate the time difference between the two dates
-    time_difference = abs((date2 - date1))
-
-    # Step 3: Return the number of days as an integer
-    return time_difference.days
-
-def get_alpha_vantage_stock_price(ticker):
-    api_key = Config.ALPHA_VANTAGE_API_KEY
-
-    ts = TimeSeries(key=api_key, output_format='json')
-    data, _ = ts.get_quote_endpoint(symbol=ticker)
-
-    stock_price = data['05. price']
-
-    return stock_price
 
 @app.route('/api/stock-price', methods=['POST'])
 def stock_price():
