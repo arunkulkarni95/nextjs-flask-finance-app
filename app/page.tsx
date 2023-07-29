@@ -10,7 +10,7 @@ interface CompanyData {
 
 const StockTicker: React.FC = () => {
   const [ticker, setTicker] = useState('');
-  const [fiscalYear, setFiscalYear] = useState<number | ''>('');
+  const [fiscalYear, setFiscalYear] = useState<string>('');
   const [jsonData, setJsonData] = useState<CompanyData | null>(null);
   const [error, setError] = useState('');
 
@@ -20,14 +20,13 @@ const StockTicker: React.FC = () => {
   };
 
   const handleFiscalYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    setFiscalYear(isNaN(value) ? '' : value);
+    setFiscalYear(e.target.value);
     setError('');
   };
 
   const fetchData = async () => {
     try {
-      if (!ticker || !fiscalYear || isNaN(fiscalYear)) {
+      if (!ticker || !fiscalYear || isNaN(parseInt(fiscalYear))) {
         setError('Please enter a valid stock ticker and fiscal year.');
         return;
       }
@@ -55,10 +54,10 @@ const StockTicker: React.FC = () => {
           onChange={handleTickerChange}
         />
         <input
-          type="number" // Change input type to number
+          type="text" // Change input type to text
           className="border border-gray-300 p-2 mr-2"
           placeholder="Enter fiscal year"
-          value={fiscalYear === '' ? '' : fiscalYear} // Ensure empty string is displayed for invalid input
+          value={fiscalYear}
           onChange={handleFiscalYearChange}
         />
         <button
