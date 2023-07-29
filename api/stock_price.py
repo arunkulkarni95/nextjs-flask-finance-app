@@ -1,24 +1,24 @@
-from flask import Blueprint, jsonify, request
-from alpha_vantage.timeseries import TimeSeries
-from config import Config
+# from flask import Flask, jsonify, request
+# from alpha_vantage.timeseries import TimeSeries
+# from config.config import Config
 
-def get_alpha_vantage_stock_price(ticker):
-    api_key = Config.ALPHA_VANTAGE_API_KEY
+# app = Flask(__name__)
 
-    ts = TimeSeries(key=api_key, output_format='json')
-    data, _ = ts.get_quote_endpoint(symbol=ticker)
+# def get_alpha_vantage_stock_price(ticker):
+#     api_key = Config.ALPHA_VANTAGE_API_KEY
 
-    stock_price = data['05. price']
+#     ts = TimeSeries(key=api_key, output_format='json')
+#     data, _ = ts.get_quote_endpoint(symbol=ticker)
 
-    return stock_price
+#     stock_price = data['05. price']
 
-stock_price_bp = Blueprint('stock_price', __name__)
+#     return stock_price
 
-@stock_price_bp.route('/stock-price', methods=['POST'])
-def stock_price():
-    ticker = request.json['ticker']
-    stock_price = get_alpha_vantage_stock_price(ticker)
+# @app.route('/stock-price', methods=['POST'])
+# def stock_price():
+#     ticker = request.json['ticker']
+#     stock_price = get_alpha_vantage_stock_price(ticker)
 
-    return jsonify({'ticker': ticker, 'stock_price': stock_price})
+#     return jsonify({'ticker': ticker, 'stock_price': stock_price})
 
 
