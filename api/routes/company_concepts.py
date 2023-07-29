@@ -19,7 +19,7 @@ def get_days_difference(date_str1, date_str2):
     # Step 3: Return the number of days as an integer
     return time_difference.days
 
-@all_company_concepts_bp.route('/financials/all-company-concepts', methods=['POST'])
+@company_concepts_bp.route('/financials/company-concepts', methods=['POST'])
 def get_company_concepts():
     ticker = request.json['ticker'].upper()
     fiscal_year = request.json['fiscal_year']
