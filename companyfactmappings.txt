@@ -1,2 +1,38 @@
 Revenue - SalesRevenueNet
-Interest Expense - 
+Interest Expense - InterestExpense
+Depreciation and Amortization - DepreciationDepletionAndAmortization
+Pretax Income - IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest
+Operating Income - OperatingIncomeLoss
+Pretax Income - IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest
+EBITDA - OperatingIncomeLoss + DepreciationDepletionAndAmortization
+Income Tax Expense - IncomeTaxExpenseBenefit
+Net Income Before Minority Interest - ProfitLoss
+Minority Interests (IS) - NetIncomeLossAttributableToNoncontrollingInterest
+Net Income (Available to Common Shareholders) - NetIncomeLoss
+Total Cash Preferred Dividends - CommonStockDividendsPerShareDeclared
+Other Adjustments - EffectiveIncomeTaxRateReconciliationOtherAdjustments
+Dividends Paid - PaymentsOfDividends
+Chg Retained Earnings - NetIncomeLoss - PaymentsOfDividends
+
+Operating Cash - Assumptions.OperatingCashPercent * SalesRevenueNet
+Excess Cash - CashAndCashEquivalentsAtCarryingValue + ShortTermInvestments - Operating Cash
+Accounts & Notes Receivable - AccountsReceivableNetCurrent
+Inventories - InventoryNet
+Other Current Assets - PrepaidExpenseAndOtherAssetsCurrent
+Total Current Assets - AssetsCurrent, also Op Cash + Excess Cash + AccountsReceivableNetCurrent + InventoryNet + PrepaidExpenseAndOtherAssetsCurrent
+LT Investments & LT Receivables - AvailableForSaleSecuritiesNoncurrent
+Net Fixed Assets - PropertyPlantAndEquipmentNet
+Net Goodwill - Goodwill + IntangibleAssetsNetExcludingGoodwill
+Total Long-Term Asssets - NoncurrentAssets
+Other LT Assets - NoncurrentAssets - (AvailableForSaleSecuritiesNoncurrent + PropertyPlantAndEquipmentNet + IntangibleAssetsNetExcludingGoodwill)
+Total Assets - Assets
+
+Total Current Liabilities - LiabilitiesCurrent
+Short-Term Borrowings - LongTermDebtCurrent
+Long-Term Borrowings - LongTermDebt - LongTermDebtCurrent
+Total Liabilities - Liabilities
+Total LT Liabilities = Liabilities - LiabilitiesCurrent
+Minority Interest - MinorityInterest
+Total Equity - StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest
+Total Liabilities & Equity - LiabilitiesAndStockholdersEquity
+
