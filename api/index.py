@@ -1,4 +1,5 @@
 import requests, json, os
+from os.path import join
 from flask import Flask, jsonify, request
 from datetime import datetime
 from alpha_vantage.timeseries import TimeSeries
@@ -77,7 +78,7 @@ def get_company_concepts():
     try:
         result = ''
         if ticker == "COST":
-            costco_facts = open(os.getcwd() + '\\api\\costco_company_facts.json')
+            costco_facts = open(join('files','costco_company_facts.json'), 'r')
             result = json.load(costco_facts)
         else:
             headers = {'User-Agent': USER_AGENT}
