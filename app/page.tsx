@@ -112,7 +112,7 @@ const Page: React.FC = () => {
 
       {stockPrice !== null && (
         <div className="text-center mt-4">
-          <p className="text-lg font-semibold">Current Share Price for {financialData[0].ticker}: ${stockPrice}</p>
+          <p className="text-lg font-semibold">Current Share Price for {financialData[0].Ticker}: ${stockPrice}</p>
         </div>
       )}
 
