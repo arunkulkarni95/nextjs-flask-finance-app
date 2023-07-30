@@ -3,7 +3,7 @@
 import React from 'react';
 
 interface FinancialData {
-  FY: number;
+  fy: number;
   [key: string]: number | string;
 }
 
@@ -13,11 +13,11 @@ interface CompanyConceptsTableProps {
 
 const CompanyConceptsTable: React.FC<CompanyConceptsTableProps> = ({ data }) => {
   const getColumns = () => {
-    return data.map((item) => item.FY);
+    return data.map((item) => item.fy);
   };
 
   const getRows = () => {
-    const metrics = Object.keys(data[0]).filter((key) => key !== 'FY');
+    const metrics = Object.keys(data[0]).filter((key) => key !== 'fy');
     return metrics;
   };
 

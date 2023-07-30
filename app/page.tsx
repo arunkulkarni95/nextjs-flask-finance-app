@@ -5,7 +5,7 @@ import axios from 'axios';
 import CompanyConceptsTable from './components/CompanyConceptTable'; // Corrected import path
 
 interface FinancialData {
-  FY: number;
+  fy: number;
   [key: string]: number | string;
 }
 
@@ -112,7 +112,7 @@ const Page: React.FC = () => {
 
       {stockPrice !== null && (
         <div className="text-center mt-4">
-          <p className="text-lg font-semibold">Current Share Price for {financialData[0].Ticker}: ${stockPrice}</p>
+          <p className="text-lg font-semibold">Current Share Price for {financialData[0].ticker}: ${stockPrice}</p>
         </div>
       )}
 
