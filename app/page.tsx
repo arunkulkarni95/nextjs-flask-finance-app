@@ -66,7 +66,7 @@ const Page: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const authorWebsite = 'https://arunkulkarni.io';
 
-  const sortedFinancialData = financialData.slice().sort((a, b) => a.fy - b.fy);
+  //const sortedFinancialData = financialData.slice().sort((a, b) => a.fy - b.fy);
 
   return (
     <div className="p-4 bg-white">
@@ -118,7 +118,7 @@ const Page: React.FC = () => {
 
       {/* Add shadow above the table */}
       <div className="shadow-lg mt-4 bg-white">
-        {sortedFinancialData.length > 0 && <CompanyConceptsTable data={sortedFinancialData} />}
+        {financialData.length > 0 && <CompanyConceptsTable data={financialData} />}
       </div>
 
       {error && <p className="text-red-600 mt-2">{error}</p>}

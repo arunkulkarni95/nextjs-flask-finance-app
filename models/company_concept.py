@@ -6,12 +6,20 @@ class CompanyConcept:
         self.fy = assumptions.LastReportedYear
         self.url = data.get("url", None)
         
-        if (self.fy >= 2018):
-            self.Revenue = data.get("Revenues", None)
+        if (assumptions.ticker.upper() == 'META'):
+            if (self.fy >= 2018):
+                self.Revenue = data.get("RevenueFromContractWithCustomerExcludingAssessedTax", None)
+            else:
+                self.Revenue = data.get("Revenues", None)
         else:
-            self.Revenue = data.get("SalesRevenueNet", None)
+            if (self.fy >= 2018):
+                self.Revenue = data.get("Revenues", None)
+            else:
+                self.Revenue = data.get("SalesRevenueNet", None)
         
         self.Interest_Expense = data.get("InterestExpense", None)
+        
+        #TODO logic to calculate this from the other fields if it is found to be null - otherwise forecast it based on historical trend % of sales
         self.Depreciation_and_Amortization = data.get("DepreciationDepletionAndAmortization", None)
         self.Pretax_Income = data.get("IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest", None)
         self.Operating_Income = data.get("OperatingIncomeLoss", None)
