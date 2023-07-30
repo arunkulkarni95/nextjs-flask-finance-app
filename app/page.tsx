@@ -55,8 +55,10 @@ const Page: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const authorWebsite = 'https://arunkulkarni.io';
 
+  const sortedFinancialData = financialData.slice().sort((a, b) => a.fy - b.fy);
+
   return (
-    <div className="p-4">
+    <div className="p-4 bg-white">
       <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
         <div className="mb-4">
           <label className="block text-gray-600 mb-2">Stock Ticker:</label>
@@ -98,8 +100,8 @@ const Page: React.FC = () => {
       </form>
 
       {/* Add shadow above the table */}
-      <div className="shadow-lg mt-4">
-        {financialData.length > 0 && <CompanyConceptsTable data={financialData} />}
+      <div className="shadow-lg mt-4 bg-white">
+        {sortedFinancialData.length > 0 && <CompanyConceptsTable data={sortedFinancialData} />}
       </div>
 
       {error && <p className="text-red-600 mt-2">{error}</p>}
