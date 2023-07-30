@@ -63,6 +63,7 @@ class CompanyConcept:
         # self.Long_Term_Borrowings = data.get("LongTermDebt", None) - data.get("LongTermDebtCurrent", None) if data.get("LongTermDebt", None) is not None and data.get("LongTermDebtCurrent", None) is not None else None
         # self.Total_LT_Liabilities = data.get("Liabilities", None) - data.get("LiabilitiesCurrent", None) if data.get("Liabilities", None) is not None and data.get("LiabilitiesCurrent", None) is not None else None
         self.Total_Liabilities_and_Equity = data.get("LiabilitiesAndStockholdersEquity", None)
+        self.Total_Assets = data.get("Assets", None)
 
     def to_dict(self):
         # Convert CompanyConcept instance to a dictionary
@@ -94,4 +95,5 @@ class CompanyConcept:
             # "Long_Term_Borrowings": self.Long_Term_Borrowings,
             # "Total_LT_Liabilities": self.Total_LT_Liabilities,
             "Total_Liabilities_and_Equity": self.Total_Liabilities_and_Equity,
+            "Total_Assets": self.Total_Assets
         }
