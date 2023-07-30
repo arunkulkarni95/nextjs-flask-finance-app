@@ -1,9 +1,8 @@
 'use client'
-
 // pages/page.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
-import CompanyConceptsTable from './components/CompanyConceptTable';
+import CompanyConceptsTable from './components/CompanyConceptTable'; // Corrected import path
 
 interface FinancialData {
   fy: number;
@@ -55,50 +54,48 @@ const Page: React.FC = () => {
 
   return (
     <div className="p-4">
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col items-center justify-center mb-4 rounded-lg shadow-lg p-4 space-y-4">
-          <div className="flex flex-col">
-            <label className="text-gray-600 mb-2">Ticker:</label>
-            <input
-              type="text"
-              className="px-4 py-2 border rounded-lg"
-              value={ticker}
-              onChange={(e) => setTicker(e.target.value.toUpperCase())}
-              required
-              autoFocus // Set autoFocus for the first input
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="text-gray-600 mb-2">Fiscal Year:</label>
-            <input
-              type="number"
-              className="px-4 py-2 border rounded-lg"
-              value={fiscalYear}
-              onChange={(e) => setFiscalYear(e.target.value)}
-              required
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="text-gray-600 mb-2">Number of Years:</label>
-            <input
-              type="number"
-              className="px-4 py-2 border rounded-lg"
-              value={numYears}
-              onChange={(e) => setNumYears(e.target.value)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg"
-          >
-            Submit
-          </button>
+      <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
+        <div className="mb-4">
+          <label className="block text-gray-600 mb-2">Ticker:</label>
+          <input
+            type="text"
+            className="w-full px-4 py-2 border rounded-lg"
+            value={ticker}
+            onChange={(e) => setTicker(e.target.value.toUpperCase())}
+            required
+            autoFocus // Set autoFocus for the first input
+          />
         </div>
+        <div className="mb-4">
+          <label className="block text-gray-600 mb-2">Fiscal Year:</label>
+          <input
+            type="number"
+            className="w-full px-4 py-2 border rounded-lg"
+            value={fiscalYear}
+            onChange={(e) => setFiscalYear(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-600 mb-2">Number of Years:</label>
+          <input
+            type="number"
+            className="w-full px-4 py-2 border rounded-lg"
+            value={numYears}
+            onChange={(e) => setNumYears(e.target.value)}
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white rounded-lg py-2 hover:bg-blue-600 transition-colors duration-300"
+        >
+          Submit
+        </button>
       </form>
 
       {/* Add shadow above the table */}
-      <div className="shadow-lg">
+      <div className="shadow-lg mt-4">
         {financialData.length > 0 && <CompanyConceptsTable data={financialData} />}
       </div>
 
