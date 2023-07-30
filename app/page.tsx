@@ -62,7 +62,7 @@ const Page: React.FC = () => {
           <label className="block text-gray-600 mb-2">Stock Ticker:</label>
           <input
             type="text"
-            className="w-full px-4 py-2 border rounded-lg"
+            className="w-full px-4 py-2 border rounded-lg text-black"
             value={ticker}
             onChange={(e) => setTicker(e.target.value.toUpperCase())}
             required
@@ -73,7 +73,7 @@ const Page: React.FC = () => {
           <label className="block text-gray-600 mb-2">Latest Fiscal Year:</label>
           <input
             type="number"
-            className="w-full px-4 py-2 border rounded-lg"
+            className="w-full px-4 py-2 border rounded-lg text-black"
             value={fiscalYear}
             onChange={(e) => setFiscalYear(e.target.value)}
             required
@@ -83,7 +83,7 @@ const Page: React.FC = () => {
           <label className="block text-gray-600 mb-2">Number of Historical Years:</label>
           <input
             type="number"
-            className="w-full px-4 py-2 border rounded-lg"
+            className="w-full px-4 py-2 border rounded-lg text-black"
             value={numYears}
             onChange={(e) => setNumYears(e.target.value)}
             required
