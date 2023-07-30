@@ -38,6 +38,7 @@ def get_company_concepts(ticker, fiscal_year, num_hist_years=1):
         for i in range(0,num_hist_years):
             fdata = {}
             fdata['fy'] = fiscal_year - i
+            fdata['ticker'] = ticker
             for item in concepts_list:
                 data = data_concepts[item]['units']
                 data_units = list(data_concepts[item]['units'].keys())

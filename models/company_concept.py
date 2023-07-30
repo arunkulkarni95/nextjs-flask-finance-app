@@ -4,6 +4,7 @@ class CompanyConcept:
     def __init__(self, data, assumptions: Assumptions):
         # Extracting properties from the data
         self.fy = assumptions.LastReportedYear
+        self.ticker = assumptions.ticker
         self.url = data.get("url", None)
         
         revenues = data.get("Revenues", None)
@@ -69,6 +70,7 @@ class CompanyConcept:
         # Convert CompanyConcept instance to a dictionary
         return {
             "fy": self.fy,
+            "ticker": self.ticker,
             "url": self.url,
             "Revenue": self.Revenue,
             "Interest_Expense": self.Interest_Expense,
