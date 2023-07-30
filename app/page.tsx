@@ -112,7 +112,7 @@ const Page: React.FC = () => {
 
       {stockPrice !== null && (
         <div className="text-center mt-4">
-          <p className="text-lg font-semibold">Current Share Price for {ticker.toUpperCase()}: ${stockPrice}</p>
+          <p className="text-lg font-semibold">Current Share Price: ${stockPrice}</p>
         </div>
       )}
 
