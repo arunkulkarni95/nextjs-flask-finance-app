@@ -28,6 +28,7 @@ def get_company_concepts(ticker, fiscal_year, num_hist_years=1):
             result = response.json()
 
         concepts_list = list(result['facts']['us-gaap'].keys())
+        print(concepts_list)
         data_concepts = result['facts']['us-gaap']
 
         results = []    

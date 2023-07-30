@@ -6,16 +6,21 @@ class CompanyConcept:
         self.fy = assumptions.LastReportedYear
         self.url = data.get("url", None)
         
-        if (assumptions.ticker.upper() == 'META'):
-            if (self.fy >= 2018):
-                self.Revenue = data.get("RevenueFromContractWithCustomerExcludingAssessedTax", None)
-            else:
-                self.Revenue = data.get("Revenues", None)
+        revenues = data.get("Revenues", None)
+        sales_revenue_net = data.get("SalesRevenueNet", None)
+        revenue_from_contract_ex_tax = data.get("RevenueFromContractWithCustomerExcludingAssessedTax", None)
+        revenue_from_contract_inc_tax = data.get("RevenueFromContractWithCustomerIncludingAssessedTax", None)
+
+        if (revenues != None):
+            self.Revenue = revenues
+        elif (sales_revenue_net != None):
+            self.Revenue = sales_revenue_net
+        elif (revenue_from_contract_ex_tax != None):
+            self.Revenue = revenue_from_contract_ex_tax
+        elif (revenue_from_contract_inc_tax != None):
+            self.Revenue = revenue_from_contract_inc_tax
         else:
-            if (self.fy >= 2018):
-                self.Revenue = data.get("Revenues", None)
-            else:
-                self.Revenue = data.get("SalesRevenueNet", None)
+            self.Revenue = None 
         
         self.Interest_Expense = data.get("InterestExpense", None)
         
@@ -34,8 +39,23 @@ class CompanyConcept:
         # self.Chg_Retained_Earnings = self.Net_Income_Before_Minority_Interest - self.Dividends_Paid if self.Net_Income_Before_Minority_Interest is not None and self.Dividends_Paid is not None else None
         # self.Operating_Cash = data.get("SalesRevenueNet", None) * assumptions.OperatingCashPercent if data.get("SalesRevenueNet", None) is not None else None
         # self.Excess_Cash = data.get("CashAndCashEquivalentsAtCarryingValue", None) + data.get("ShortTermInvestments", None) - self.Operating_Cash if data.get("CashAndCashEquivalentsAtCarryingValue", None) is not None and data.get("ShortTermInvestments", None) is not None and self.Operating_Cash is not None else None
-        self.Accounts_Notes_Receivable = data.get("AccountsReceivableNetCurrent", None)
-        self.Inventories = data.get("InventoryNet", None)
+        
+        ar_net_current = data.get("AccountsReceivableNetCurrent", None)
+        r_net_current = data.get("ReceivablesNetCurrent", None)
+        
+        if (ar_net_current == None):
+            self.Accounts_Notes_Receivable = r_net_current
+        else:
+            self.Accounts_Notes_Receivable = ar_net_current
+        
+        inventory_net = data.get("InventoryNet", None)
+        assets_for_sale = data.get("AssetsHeldForSaleNotPartOfDisposalGroupCurrent", None)
+
+        if (inventory_net == None):
+            self.Inventories = assets_for_sale
+        else:
+            self.Inventories = inventory_net
+
         self.Other_Current_Assets = data.get("PrepaidExpenseAndOtherAssetsCurrent", None)
         # self.Total_Current_Assets = data.get("AssetsCurrent", None) + self.Operating_Cash + self.Excess_Cash + data.get("AccountsReceivableNetCurrent", None) + data.get("InventoryNet", None) + data.get("PrepaidExpenseAndOtherAssetsCurrent", None) if data.get("AssetsCurrent", None) is not None and self.Operating_Cash is not None and self.Excess_Cash is not None and data.get("AccountsReceivableNetCurrent", None) is not None and data.get("InventoryNet", None) is not None and data.get("PrepaidExpenseAndOtherAssetsCurrent", None) is not None else None
         # self.Net_Goodwill = data.get("Goodwill", None) + data.get("IntangibleAssetsNetExcludingGoodwill", None) if data.get("Goodwill", None) is not None and data.get("IntangibleAssetsNetExcludingGoodwill", None) is not None else None
