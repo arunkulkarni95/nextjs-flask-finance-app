@@ -5,7 +5,7 @@ import axios from 'axios';
 import CompanyConceptsTable from './components/CompanyConceptTable'; // Corrected import path
 
 interface FinancialData {
-  fy: number;
+  FY: number;
   [key: string]: number | string;
 }
 

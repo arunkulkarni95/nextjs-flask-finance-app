@@ -69,7 +69,7 @@ class CompanyConcept:
     def to_dict(self):
         # Convert CompanyConcept instance to a dictionary
         return {
-            "Fiscal Year (FY)": self.fy,
+            "FY": self.fy,
             "SEC URL": self.url,
             "Ticker": self.ticker,
             "Revenue": self.Revenue,
