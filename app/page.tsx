@@ -9,12 +9,18 @@ interface FinancialData {
   [key: string]: number | string;
 }
 
+interface StockPriceResponse {
+  ticker: string;
+  stock_price: number;
+}
+
 const Page: React.FC = () => {
   const [ticker, setTicker] = useState<string>('');
   const [fiscalYear, setFiscalYear] = useState<string>('');
   const [numYears, setNumYears] = useState<string>('');
   const [financialData, setFinancialData] = useState<FinancialData[]>([]);
   const [error, setError] = useState<string>('');
+  const [stockPrice, setStockPrice] = useState<number | null>(null); // New state for stock price
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +52,11 @@ const Page: React.FC = () => {
       });
       setFinancialData(response.data);
       setError('');
+
+      const stockPriceResponse = await axios.post<StockPriceResponse>('/api/stock-price', {
+        ticker: ticker.toUpperCase(),
+      });
+      setStockPrice(stockPriceResponse.data.stock_price);
     } catch (error) {
       console.error('Error fetching financial data:', error);
       setError('Error fetching financial data. Please try again later.');
@@ -98,6 +109,12 @@ const Page: React.FC = () => {
           Submit
         </button>
       </form>
+
+      {stockPrice !== null && (
+        <div className="text-center mt-4">
+          <p className="text-lg font-semibold">Current Share Price for {ticker.toUpperCase()}: ${stockPrice}</p>
+        </div>
+      )}
 
       {/* Add shadow above the table */}
       <div className="shadow-lg mt-4 bg-white">
