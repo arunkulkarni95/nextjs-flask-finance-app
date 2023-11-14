@@ -64,7 +64,7 @@ const Page: React.FC = () => {
   };
 
   const currentYear = new Date().getFullYear();
-  const authorWebsite = 'https://arunkulkarni.io';
+  const authorWebsite = 'https://resume.arunkulkarni.io';
 
   //const sortedFinancialData = financialData.slice().sort((a, b) => a.fy - b.fy);
 
