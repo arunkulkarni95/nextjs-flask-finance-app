@@ -26,7 +26,7 @@ const Page: React.FC = () => {
     e.preventDefault();
 
     if (!ticker.match(/^[A-Za-z]+$/)) {
-      setError('Ticker must contain only letters (uppercase or lowercase).');
+      setError('Ticker must contain only letters (uppercase or lowercase).'); 
       return;
     }
 
